@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">TheWeatherApp</string>
+    <string name="title_home">My Location</string>
+    <string name="place_one">Georgia</string>
+    <string name="place_two">Greece</string>
+</resources>
