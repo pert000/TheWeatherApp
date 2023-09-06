@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TheWeatherApp</string>
     <string name="title_home">My Location</string>
-    <string name="place_one">Georgia</string>
-    <string name="place_two">Greece</string>
+    <string name="place_one">Tbilisi</string>
+    <string name="place_two">New York</string>
+    <string name="place_three">Tel Aviv</string>
+    <string name="fahrenheit_symbol">%1$s°F</string>
 </resources>

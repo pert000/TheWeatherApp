@@ -13,7 +13,10 @@
 
     <item
         android:id="@+id/navigation_place_two"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/place_two" />
-
+    <item
+        android:id="@+id/navigation_place_three"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/place_three" />
 </menu>

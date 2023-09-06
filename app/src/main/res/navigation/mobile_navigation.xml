@@ -22,4 +22,10 @@
         android:name="com.example.theweatherapp.ui.placeTwo.PlaceTwoFragment"
         android:label="@string/place_two"
         tools:layout="@layout/fragment_place_two" />
+
+    <fragment
+        android:id="@+id/navigation_place_three"
+        android:name="com.example.theweatherapp.ui.placeThree.PlaceThreeFragment"
+        android:label="@string/place_three"
+        tools:layout="@layout/fragment_place_three" />
 </navigation>

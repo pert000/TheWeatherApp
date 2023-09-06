@@ -1,10 +1,10 @@
-package com.example.theweatherapp.ui.placeOne
+package com.example.theweatherapp.ui.placeThree
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.theweatherapp.R
 import com.example.theweatherapp.data.Resource
@@ -15,13 +15,14 @@ import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PlaceOneFragment : Fragment() {
+class PlaceThreeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModels()
 
-    private val tbilisi = LatLng(41.7151, 44.8271)
+    private val telAviv = LatLng(32.0853,   34.7818)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,7 +49,7 @@ class PlaceOneFragment : Fragment() {
             }
         }
 
-        homeViewModel.fetchWeatherData(tbilisi.latitude, tbilisi.longitude)
+        homeViewModel.fetchWeatherData(telAviv.latitude, telAviv.longitude)
 
         return binding.root
     }
@@ -57,4 +58,5 @@ class PlaceOneFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
