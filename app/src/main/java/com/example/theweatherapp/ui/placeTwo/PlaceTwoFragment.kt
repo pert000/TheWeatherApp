@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.example.theweatherapp.R
 import com.example.theweatherapp.data.Resource
 import com.example.theweatherapp.databinding.FragmentHomeBinding
+import com.example.theweatherapp.ui.helper.Constants
 import com.example.theweatherapp.ui.helper.setImage
 import com.example.theweatherapp.ui.home.HomeViewModel
 import com.google.android.gms.maps.model.LatLng
@@ -21,7 +22,7 @@ class PlaceTwoFragment : Fragment() {
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModels()
 
-    private val newYork = LatLng(40.7128, 74.0060)
+    private val london = LatLng(51.5085, -0.1257)
 
 
     override fun onCreateView(
@@ -37,20 +38,41 @@ class PlaceTwoFragment : Fragment() {
             when (result) {
                 is Resource.Success -> {
 
-                    binding.title.text = result.data?.name
-                    binding.temp.text =
-                        getString(R.string.fahrenheit_symbol, result.data?.main?.temp.toString())
-                    binding.desc.text = result.data?.weather?.get(0)?.description
-                    setImage(result.data?.weather?.get(0)?.icon, binding.desc, requireActivity())
+                    binding.apply {
+                        title.text = result.data?.name
+                        temp.text =
+                            getString(R.string.kelvin_symbol, result.data?.main?.temp.toString())
+                        desc.text = result.data?.weather?.get(0)?.description
+                        setImage(
+                            result.data?.weather?.get(0)?.icon,
+                            desc,
+                            requireActivity()
+                        )
+                        permissionNotGrantedText.visibility = View.GONE
+                        detailsBTN.visibility = View.VISIBLE
+                        progressBar.visibility = View.GONE
+                    }
+
                 }
 
                 is Resource.Error -> {
+
+                    binding.apply {
+                        progressBar.visibility = View.GONE
+                        permissionNotGrantedText.visibility = View.VISIBLE
+                        detailsBTN.visibility = View.GONE
+                        permissionNotGrantedText.text =
+                            if (result.message.equals(Constants.Constants.PERMISSION_NOT_GRANTED)) "${R.string.permission_not_granted_screen}"
+                            else
+                                result.message
+                    }
+
 
                 }
             }
         }
 
-        homeViewModel.fetchWeatherData(newYork.latitude, newYork.longitude)
+        homeViewModel.fetchWeatherData(london.latitude, london.longitude)
 
         return binding.root
     }

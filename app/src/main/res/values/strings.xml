@@ -2,8 +2,9 @@
     <string name="app_name">TheWeatherApp</string>
     <string name="title_home">My Location</string>
     <string name="place_one">Tbilisi</string>
-    <string name="place_two">New York</string>
+    <string name="place_two">London</string>
     <string name="place_three">Tel Aviv</string>
-    <string name="fahrenheit_symbol">%1$s°F</string>
+    <string name="kelvin_symbol">%1$s K</string>
     <string name="permission_not_granted_screen">There will be screen when permission is not granted</string>
+    <string name="see_details">see details</string>
 </resources>
