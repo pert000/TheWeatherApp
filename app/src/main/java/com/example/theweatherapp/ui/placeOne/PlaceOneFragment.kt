@@ -21,7 +21,9 @@ class PlaceOneFragment : Fragment() {
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModels()
 
-    private val tbilisi = LatLng(41.7151, 44.8271)
+    private val tbilisi = LatLng(41.6941, 44.8337)
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -8,6 +8,7 @@ import com.example.theweatherapp.data.Resource
 import com.example.theweatherapp.data.remote.model.WeatherDto
 import com.example.theweatherapp.domain.location.LocationTracker
 import com.example.theweatherapp.domain.repository.WeatherRepository
+import com.example.theweatherapp.ui.helper.Constants.Constants.PERMISSION_NOT_GRANTED
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -47,7 +48,7 @@ class HomeViewModel @Inject constructor(
                         }
                     }
                 } ?: kotlin.run {
-                    _weatherData.value = Resource.Error("Permission is not granted")
+                    _weatherData.value = Resource.Error(PERMISSION_NOT_GRANTED)
 
                 }
             }

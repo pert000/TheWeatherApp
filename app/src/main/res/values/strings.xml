@@ -5,4 +5,5 @@
     <string name="place_two">New York</string>
     <string name="place_three">Tel Aviv</string>
     <string name="fahrenheit_symbol">%1$s°F</string>
+    <string name="permission_not_granted_screen">There will be screen when permission is not granted</string>
 </resources>

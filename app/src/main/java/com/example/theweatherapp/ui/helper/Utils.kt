@@ -7,7 +7,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
-import com.example.theweatherapp.data.Resource
 import java.util.concurrent.Executors
 
 fun setImage(id: String?,des: TextView,activity :Activity) {
