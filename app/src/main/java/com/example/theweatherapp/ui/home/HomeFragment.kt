@@ -1,9 +1,13 @@
 package com.example.theweatherapp.ui.home
 
+import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.theweatherapp.R
@@ -19,17 +23,37 @@ class HomeFragment : Fragment() {
 
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModels()
+    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setObserve()
 
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        permissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) {
+            homeViewModel.fetchWeatherData()
+        }
+        permissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+            )
+        )
 
 
+
+
+
+        return binding.root
+    }
+
+    private fun setObserve() {
         homeViewModel.weatherData.observe(viewLifecycleOwner) { result ->
 
 
@@ -40,18 +64,16 @@ class HomeFragment : Fragment() {
                     binding.temp.text =
                         getString(R.string.fahrenheit_symbol, result.data?.main?.temp.toString())
                     binding.desc.text = result.data?.weather?.get(0)?.description
-                    setImage(result.data?.weather?.get(0)?.icon,binding.desc,requireActivity())
+                    setImage(result.data?.weather?.get(0)?.icon, binding.desc, requireActivity())
                 }
 
                 is Resource.Error -> {
+                    Toast.makeText(context, "${result.message}", Toast.LENGTH_SHORT).show()
+
 
                 }
             }
         }
-
-        homeViewModel.fetchWeatherData(41.7151, 44.8271)
-
-        return  binding.root
     }
 
     override fun onDestroyView() {
