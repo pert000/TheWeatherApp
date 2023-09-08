@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.theweatherapp.R
 import com.example.theweatherapp.data.Resource
 import com.example.theweatherapp.databinding.FragmentHomeBinding
+import com.example.theweatherapp.ui.details.DetailsFragment
 import com.example.theweatherapp.ui.helper.Constants
 import com.example.theweatherapp.ui.helper.SharedPrefsManager
 import com.example.theweatherapp.ui.helper.kelvinToCelsius
@@ -35,6 +38,15 @@ class PlaceThreeFragment : Fragment() {
         SharedPrefsManager.init(requireContext())
         binding.switcher.setOnCheckedChangeListener { _, isChecked ->
             binding.temp.text = changeTemp()
+        }
+        binding.detailsBTN.setOnClickListener {
+
+            findNavController().navigate(
+                R.id.action_navigation_place_three_to_detailsFragment,
+                bundleOf(DetailsFragment.lon to telAviv.longitude.toString(), DetailsFragment.lat to telAviv.latitude.toString() )
+
+            )
+
         }
         homeViewModel.weatherData.observe(viewLifecycleOwner) { result ->
 

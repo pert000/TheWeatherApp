@@ -10,4 +10,5 @@
     <string name="see_details">see details</string>
     <string name="celsius_symbol">°C</string>
     <string name="kelvin_symbol">K</string>
+    <string name="coordinates_text">Coordinates : Longitude: %s, Latitude: %s</string>
 </resources>

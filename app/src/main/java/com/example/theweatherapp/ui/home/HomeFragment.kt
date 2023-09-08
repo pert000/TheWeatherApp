@@ -13,7 +13,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.theweatherapp.R
 import com.example.theweatherapp.data.Resource
+import com.example.theweatherapp.data.remote.model.WeatherDto
 import com.example.theweatherapp.databinding.FragmentHomeBinding
+import com.example.theweatherapp.ui.details.DetailsFragment.Companion.lat
+import com.example.theweatherapp.ui.details.DetailsFragment.Companion.lon
 import com.example.theweatherapp.ui.helper.Constants.Constants.PERMISSION_NOT_GRANTED
 import com.example.theweatherapp.ui.helper.SharedPrefsManager
 import com.example.theweatherapp.ui.helper.kelvinToCelsius
@@ -30,6 +33,7 @@ class HomeFragment : Fragment() {
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     private var tempInK: Double? = null
+    private  var weatherDto: WeatherDto?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,7 +66,8 @@ class HomeFragment : Fragment() {
 
             findNavController().navigate(
                 R.id.action_navigation_home_to_detailsFragment,
-                bundleOf("wind" to "wind")
+                bundleOf(lon to weatherDto?.coord?.lon.toString(),lat to weatherDto?.coord?.lat.toString() )
+
             )
 
         }
@@ -80,6 +85,7 @@ class HomeFragment : Fragment() {
         homeViewModel.weatherData.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Resource.Success -> {
+                    weatherDto =result.data
                     binding.switcher.isChecked = SharedPrefsManager.getSwitchState()
                     binding.apply {
                         title.text = result.data?.name

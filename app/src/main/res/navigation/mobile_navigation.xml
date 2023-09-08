@@ -16,6 +16,12 @@
             <argument
                 android:name="wind"
                 app:argType="string" />
+            <argument
+                android:name="lon"
+                app:argType="string" />
+            <argument
+                android:name="lat"
+                app:argType="string" />
         </action>
     </fragment>
 
@@ -23,19 +29,31 @@
         android:id="@+id/navigation_place_one"
         android:name="com.example.theweatherapp.ui.placeOne.PlaceOneFragment"
         android:label="@string/place_one"
-        tools:layout="@layout/fragment_place_one" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_place_one_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_place_two"
         android:name="com.example.theweatherapp.ui.placeTwo.PlaceTwoFragment"
         android:label="@string/place_two"
-        tools:layout="@layout/fragment_place_two" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_place_two_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_place_three"
         android:name="com.example.theweatherapp.ui.placeThree.PlaceThreeFragment"
         android:label="@string/place_three"
-        tools:layout="@layout/fragment_place_three" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_place_three_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.theweatherapp.ui.details.DetailsFragment"
