@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navigation_home_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment" >
+            <argument
+                android:name="wind"
+                app:argType="string" />
+        </action>
     </fragment>
 
     <fragment
@@ -36,5 +40,9 @@
         android:id="@+id/detailsFragment"
         android:name="com.example.theweatherapp.ui.details.DetailsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="wind"
+            app:argType="string" />
+    </fragment>
 </navigation>

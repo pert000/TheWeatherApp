@@ -2,17 +2,19 @@ package com.example.theweatherapp.ui.details
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.theweatherapp.R
+import com.example.theweatherapp.databinding.FragmentDetailsBinding
+import com.example.theweatherapp.databinding.FragmentHomeBinding
 
 class DetailsFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = DetailsFragment()
-    }
+    private var _binding: FragmentDetailsBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var viewModel: DetailsViewModel
 
@@ -20,13 +22,10 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_details, container, false)
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        Log.d("^_^", "${arguments?.getString("wind")} ")
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -45,8 +46,14 @@ class HomeFragment : Fragment() {
             )
         )
 
+        binding.detailsBTN.setOnClickListener {
 
-        binding.detailsBTN.setOnClickListener { findNavController().navigate(R.id.action_navigation_home_to_detailsFragment) }
+            findNavController().navigate(
+                R.id.action_navigation_home_to_detailsFragment,
+                bundleOf("wind" to "wind")
+            )
+
+        }
 
 
         return binding.root
