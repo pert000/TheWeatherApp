@@ -10,6 +10,8 @@ import com.example.theweatherapp.R
 import com.example.theweatherapp.data.Resource
 import com.example.theweatherapp.databinding.FragmentHomeBinding
 import com.example.theweatherapp.ui.helper.Constants
+import com.example.theweatherapp.ui.helper.SharedPrefsManager
+import com.example.theweatherapp.ui.helper.kelvinToCelsius
 import com.example.theweatherapp.ui.helper.setImage
 import com.example.theweatherapp.ui.home.HomeViewModel
 import com.google.android.gms.maps.model.LatLng
@@ -21,7 +23,7 @@ class PlaceOneFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModels()
-
+    private var tempInK: Double? = null
     private val tbilisi = LatLng(41.6941, 44.8337)
 
 
@@ -32,15 +34,23 @@ class PlaceOneFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+
+        SharedPrefsManager.init(requireContext())
+        binding.switcher.setOnCheckedChangeListener { _, isChecked ->
+            binding.temp.text = changeTemp()
+        }
+        binding.detailsBTN.setOnClickListener {
+
+        }
         homeViewModel.weatherData.observe(viewLifecycleOwner) { result ->
 
             when (result) {
                 is Resource.Success -> {
-
+                    binding.switcher.isChecked = SharedPrefsManager.getSwitchState()
                     binding.apply {
                         title.text = result.data?.name
-                        temp.text =
-                            getString(R.string.kelvin_symbol, result.data?.main?.temp.toString())
+                        tempInK = result.data?.main?.temp
+                        temp.text = changeTemp()
                         desc.text = result.data?.weather?.get(0)?.description
                         setImage(
                             result.data?.weather?.get(0)?.icon,
@@ -76,6 +86,14 @@ class PlaceOneFragment : Fragment() {
         homeViewModel.fetchWeatherData(tbilisi.latitude, tbilisi.longitude)
 
         return binding.root
+    }
+    private fun changeTemp():String {
+        return if (binding.switcher.isChecked) {
+            getString(R.string.c_symbol,
+                tempInK?.let { kelvinToCelsius(it) })
+        } else {
+            getString(R.string._kelvin_symbol, tempInK.toString())
+        }
     }
 
     override fun onDestroyView() {

@@ -41,3 +41,8 @@ fun setImage(id: String?,des: TextView,activity :Activity) {
         }
     }
 }
+
+fun kelvinToCelsius(kelvin: Double): String {
+    val celsiusTemperature = kelvin - 273.15
+    return String.format("%.2f", celsiusTemperature)
+}

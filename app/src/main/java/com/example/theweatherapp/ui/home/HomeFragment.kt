@@ -15,6 +15,8 @@ import com.example.theweatherapp.R
 import com.example.theweatherapp.data.Resource
 import com.example.theweatherapp.databinding.FragmentHomeBinding
 import com.example.theweatherapp.ui.helper.Constants.Constants.PERMISSION_NOT_GRANTED
+import com.example.theweatherapp.ui.helper.SharedPrefsManager
+import com.example.theweatherapp.ui.helper.kelvinToCelsius
 import com.example.theweatherapp.ui.helper.setImage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +28,8 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+
+    private var tempInK: Double? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +49,13 @@ class HomeFragment : Fragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         )
+        SharedPrefsManager.init(requireContext())
+
+
+        binding.switcher.setOnCheckedChangeListener { _, isChecked ->
+            SharedPrefsManager.setSwitchState(isChecked)
+            binding.temp.text = changeTemp()
+        }
 
         binding.detailsBTN.setOnClickListener {
 
@@ -68,11 +79,11 @@ class HomeFragment : Fragment() {
         homeViewModel.weatherData.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Resource.Success -> {
-
+                    binding.switcher.isChecked = SharedPrefsManager.getSwitchState()
                     binding.apply {
                         title.text = result.data?.name
-                        temp.text =
-                            getString(R.string.kelvin_symbol, result.data?.main?.temp.toString())
+                        tempInK = result.data?.main?.temp
+                        temp.text = changeTemp()
                         desc.text = result.data?.weather?.get(0)?.description
                         setImage(
                             result.data?.weather?.get(0)?.icon,
@@ -86,7 +97,6 @@ class HomeFragment : Fragment() {
                 }
 
                 is Resource.Error -> {
-
                     binding.apply {
                         permissionNotGrantedText.visibility = View.VISIBLE
                         detailsBTN.visibility = View.GONE
@@ -110,6 +120,15 @@ class HomeFragment : Fragment() {
 
     private fun hideProgressBarVisible() {
         binding.progressBar.visibility = View.GONE
+    }
+
+    private fun changeTemp():String {
+        return if (binding.switcher.isChecked) {
+            getString(R.string.c_symbol,
+                tempInK?.let { kelvinToCelsius(it) })
+        } else {
+            getString(R.string._kelvin_symbol, tempInK.toString())
+        }
     }
 
     override fun onDestroyView() {

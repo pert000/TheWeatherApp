@@ -4,7 +4,10 @@
     <string name="place_one">Tbilisi</string>
     <string name="place_two">London</string>
     <string name="place_three">Tel Aviv</string>
-    <string name="kelvin_symbol">%1$s K</string>
+    <string name="_kelvin_symbol">%1$s K</string>
+    <string name="c_symbol">%1$s °C</string>
     <string name="permission_not_granted_screen">There will be screen when permission is not granted</string>
     <string name="see_details">see details</string>
+    <string name="celsius_symbol">°C</string>
+    <string name="kelvin_symbol">K</string>
 </resources>
