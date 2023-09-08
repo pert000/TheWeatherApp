@@ -40,8 +40,9 @@ class HomeFragment : Fragment() {
         permissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) {
-            homeViewModel.fetchWeatherData()
             setProgressBarVisible()
+            homeViewModel.fetchWeatherData()
+
         }
         permissionLauncher.launch(
             arrayOf(
@@ -94,14 +95,17 @@ class HomeFragment : Fragment() {
                         detailsBTN.visibility = View.VISIBLE
                     }
                     hideProgressBarVisible()
+                    switcherVisibility(true)
                 }
 
                 is Resource.Error -> {
+                    switcherVisibility(false)
+                    hideProgressBarVisible()
                     binding.apply {
                         permissionNotGrantedText.visibility = View.VISIBLE
                         detailsBTN.visibility = View.GONE
                         permissionNotGrantedText.text =
-                            if (result.message.equals(PERMISSION_NOT_GRANTED)) "${R.string.permission_not_granted_screen}"
+                            if (result.message.equals(PERMISSION_NOT_GRANTED)) getString(R.string.permission_not_granted_screen)
                             else
                                 result.message
                     }
@@ -122,12 +126,27 @@ class HomeFragment : Fragment() {
         binding.progressBar.visibility = View.GONE
     }
 
-    private fun changeTemp():String {
+    private fun changeTemp(): String {
         return if (binding.switcher.isChecked) {
             getString(R.string.c_symbol,
                 tempInK?.let { kelvinToCelsius(it) })
         } else {
             getString(R.string._kelvin_symbol, tempInK.toString())
+        }
+    }
+
+    private fun switcherVisibility(boolean: Boolean) {
+        if (boolean){
+        binding.apply {
+            switcher.visibility = View.VISIBLE
+            c.visibility = View.VISIBLE
+            k.visibility = View.VISIBLE
+        }}else{
+            binding.apply {
+                switcher.visibility = View.GONE
+                c.visibility = View.GONE
+                k.visibility = View.GONE
+            }
         }
     }
 
